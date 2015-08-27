@@ -1,7 +1,6 @@
 #! /usr/bin/python
 
 import requests
-import json
 
 # Google Suggest URL found on Stack overflow: http://stackoverflow.com/questions/5102878/google-suggest-api
 SUGGEST_URL= "http://google.com/complete/search?client=firefox&q="
