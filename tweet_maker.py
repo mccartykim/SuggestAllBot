@@ -1,13 +1,14 @@
+#! /usr/bin/python
+
 from g_suggest import googleSuggest
 import json
 
 def main():
     """
-    Rough plan: This script will be called by cron or a similar scheduler.
-    Every time it's called, it will check the index from a saved file, and hash a word from that index in the words.txt file
-    It will append the words.txt file with the first unique two (or n+1 on later iterations) words of each result.
-    (This will probably require helper functions)
-    Finally, it appends a buffer of tweets, and saves its index.    
+    This function will read the next query in query.txt, using the info saved in
+    state.json to remember settings
+    It will then find the google suggestions, and save them for later tweets
+    And finally, it will save its state for the next time the script is called.
     """
     state = loadState()
     i = state["index"]
@@ -34,10 +35,13 @@ def loadWord(index):
                 return "error"
 
 def saveState(index, length):
+    state = {}
+    with open("state.json", "r") as state_file:
+        state = json.load(state_file)
     with open("state.json", "w") as state_file:
-        output = {"index": index, "length": length}
-        json.dump(output, state_file)
-
+        state["index"] = index
+        state["length"] = length
+        json.dump(state, state_file)
 def appendQueries(suggestionList, length):
     #Collect a list of suggestions from each of the first n suggestions, eliminating repetitions
     query_list = []
