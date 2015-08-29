@@ -13,10 +13,12 @@ def main():
     i = state["index"]
     n = state["length"]
     word = loadWord(i)
+    if (len(word.split()) > n):
+        n += 1
     suggestions = googleSuggest(word)
     appendQueries(suggestions, n)
     appendTweets(suggestions)
-    saveState(i, n)
+    saveState(i+1, n)
     
 def loadState():
     with open("state.json", "r") as state_file:
@@ -34,7 +36,7 @@ def loadWord(index):
 def saveState(index, length):
     with open("state.json", "w") as state_file:
         output = {"index": index, "length": length}
-        json.dump(output)
+        json.dump(output, state_file)
 
 def appendQueries(suggestionList, length):
     #Collect a list of suggestions from each of the first n suggestions, eliminating repetitions
@@ -43,12 +45,13 @@ def appendQueries(suggestionList, length):
         try:
             query = suggestion.split()[0:length+1]
             if query not in query_list:
-                query_list.append(word)
+                query_list.append(query)
         except IndexError:
             pass #if it was shorter than n, for whatever reason, it was probably already in the list...
     with open("queries.txt", "a") as state_file:
         for query in query_list:
-            state_file.write(word + "\n")
+            print(query)
+            state_file.write(" ".join(query) + "\n")
 
 def appendTweets(suggestionList):
     with open("first_list.txt", "a") as first_list:
