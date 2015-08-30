@@ -13,7 +13,7 @@ def main():
     auth = tweepy.OAuthHandler(keys["consumer_key"], keys["consumer_secret"])
     auth.set_access_token(keys["access_token"], keys["access_token_secret"])
     twit_api = tweepy.API(auth)
-    twit_api.update_status(load_tweet(tweet_index))
+    twit_api.update_status(status=load_tweet(tweet_index))
     state = {}
     with open("state.json", "r") as state_json:
         state = json.load(state_json)
@@ -24,7 +24,7 @@ def main():
 
 def load_tweet(line):
     with open("full_list.txt", "r") as full_list:
-        for line_num, tweet in full_list:
+        for line_num, tweet in enumerate(full_list):
             if line == line_num:
                 return tweet
         #if the loop exits, line was not in the file.  We invoke tweet_maker
