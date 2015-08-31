@@ -2,6 +2,7 @@
 
 import json
 import tweepy
+import os
 
 #I've stored my own keys in a json file.  Hopefully, between my names and the tweepy
 #docs, this makes sense.
@@ -34,4 +35,5 @@ def load_tweet(line):
         
 
 if __name__ == "__main__":
+    os.chdir('C:\\Users\\Tim\\Python\\Google Suggest')
     main()
