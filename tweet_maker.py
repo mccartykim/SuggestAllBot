@@ -12,19 +12,23 @@ def main():
     """
     state = loadState()
     i = state["index"]
-    n = state["length"]
+    word_count = state["length"]
     word = loadWord(i)
-    if (len(word.split()) > n):
-        n += 1
+    # If a suggestion is longer than this length, store query strings that are one longer for future suggestions
+    if (len(word.split()) > word_count):
+        word_count += 1
     suggestions = googleSuggest(word)
-    appendQueries(suggestions, n)
+    appendQueries(suggestions, word_count)
     appendTweets(suggestions)
-    saveState(i+1, n)
+    saveState(i+1, word_count)
+
     
 def loadState():
+    result = None
     with open("state.json", "r") as state_file:
         result = json.load(state_file)
-    return result #would it be bad form to return this above?  who knows...
+    return result 
+
 
 def loadWord(index):
     with open("queries.txt", "r") as words:
@@ -34,6 +38,7 @@ def loadWord(index):
             elif(i > index):
                 return "error"
 
+
 def saveState(index, length):
     state = {}
     with open("state.json", "r") as state_file:
@@ -42,6 +47,8 @@ def saveState(index, length):
         state["index"] = index
         state["length"] = length
         json.dump(state, state_file)
+
+
 def appendQueries(suggestionList, length):
     #Collect a list of suggestions from each of the first n suggestions, eliminating repetitions
     query_list = []
@@ -57,6 +64,7 @@ def appendQueries(suggestionList, length):
             print(query)
             state_file.write(" ".join(query) + "\n")
 
+
 def appendTweets(suggestionList):
     with open("first_list.txt", "a") as first_list:
         first_list.write(suggestionList[0] + "\n")
@@ -64,5 +72,6 @@ def appendTweets(suggestionList):
         for suggestion in suggestionList:
             full_list.write(suggestion + "\n")
     
+
 if __name__ == "__main__":
     main()
