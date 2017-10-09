@@ -1,5 +1,6 @@
 #! /usr/bin/python
 
+
 import json
 import tweepy
 import os
@@ -28,10 +29,10 @@ def load_tweet(line):
         for line_num, tweet in enumerate(full_list):
             if line == line_num:
                 return tweet
-        #if the loop exits, line was not in the file.  We invoke tweet_maker
+    #if the loop exits, line was not in the file.  We invoke tweet_maker
     import tweet_maker
     tweet_maker.main()
-    return load_tweet(line) #recall this function, as the list should be full.
+    return load_tweet(line) #recall this function, as the list should no longer be empty.
         
 
 if __name__ == "__main__":
