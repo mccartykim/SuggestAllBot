@@ -23,6 +23,7 @@ def main():
     saveState(i+1, word_count)
 
     
+# TODO revise to work with cloud storage
 def loadState():
     result = None
     with open("state.json", "r") as state_file:
@@ -30,6 +31,7 @@ def loadState():
     return result 
 
 
+# TODO revise to work with cloud storage
 def loadWord(index):
     with open("queries.txt", "r") as words:
         for i, word in enumerate(words):
@@ -39,6 +41,7 @@ def loadWord(index):
                 return "error"
 
 
+# TODO revise to work with cloud storage
 def saveState(index, length):
     state = {}
     with open("state.json", "r") as state_file:
@@ -49,6 +52,7 @@ def saveState(index, length):
         json.dump(state, state_file)
 
 
+# TODO revise to work with cloud storage
 def appendQueries(suggestionList, length):
     #Collect a list of suggestions from each of the first n suggestions, eliminating repetitions
     query_list = []
@@ -65,6 +69,7 @@ def appendQueries(suggestionList, length):
             state_file.write(" ".join(query) + "\n")
 
 
+# TODO revise to work with cloud storage
 def appendTweets(suggestionList):
     with open("first_list.txt", "a") as first_list:
         first_list.write(suggestionList[0] + "\n")

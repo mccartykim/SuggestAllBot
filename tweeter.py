@@ -5,6 +5,8 @@ import json
 import tweepy
 import os
 
+
+# TODO revise whole thing to work with cloud storage
 #I've stored my own keys in a json file.  Hopefully, between my names and the tweepy
 #docs, this makes sense.
 def main():
