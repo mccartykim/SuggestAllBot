@@ -7,9 +7,9 @@ import logging
 SUGGEST_URL= "http://google.com/complete/search?client=firefox&q="
 
 def googleSuggest(query):
-        #@query: phrase to search for suggestions
-        #(ie what you'd type into Google.com)
-        #returns a list of strings from the Google API
+        # @query: phrase to search for suggestions
+        # (ie what you'd type into Google.com)
+        # returns a list of strings from the Google API
         try:
             r = requests.get(SUGGEST_URL + requests.utils.quote(query, safe=''))
             r.raise_for_status()
